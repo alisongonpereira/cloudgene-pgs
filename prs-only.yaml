@@ -1,0 +1,75 @@
+id: pgscalc
+name: Oi Marina, Oi Victor! (PGS Calc Integration)
+description: This server calculates PRSs.
+version: 1.0.0
+website: 
+category:
+
+installation:
+
+  - import:
+      source: ${app_local_folder}/bin
+      
+
+
+workflow:
+
+  steps:
+  
+    - name: PRS calculation
+      cmd: ${app_local_folder}/bin/pgs-calc apply --ref $PRS_ID $vcfInputs  --outputs $output_prefix
+      generates: $htmlFile $scoresFile $logfile
+      
+
+
+ #   - name: Ancestry Estimation
+ #     jar: imputationserver.jar
+ #     classname: genepi.imputationserver.steps.ancestry.TraceStep
+ #     binaries: ${app_hdfs_folder}/bin
+ #     references: ${app_hdfs_folder}/references
+ #
+ #   - name: Data Compression and Encryption
+ #     jar: imputationserver.jar
+ #     classname: genepi.imputationserver.steps.CompressionEncryption
+#
+
+
+  inputs:
+
+     - id: vcfInputs
+       description: input some vcfs
+       type: local-folder
+       category: RefPanel
+
+     - id: PRS_ID
+       description: Name some PRSs to calculate
+       type: text 
+       
+     - id: output_prefix
+       description: Prefix of your outputs
+       type: text 
+       
+
+  outputs:
+
+    - id: htmlFile
+      description: html generated from pgs-calc
+      type: local-file
+      download: true
+      temp: false
+      autoExport: true
+
+    - id: scoresFile
+      description: Scores calculated
+      type: local-file
+      download: true
+      temp: false
+      autoExport: true
+      
+      
+    - id: logfile
+      description: log files generated from pgs-calc
+      type: local-file
+      download: true
+      temp: false
+      autoExport: true
